@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import kotlin.math.log10
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -73,8 +74,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 
-fun digitNumber(n: Int): Int = TODO()
-
+fun digitNumber(n: Int): Int {
+    return when (n) {
+        0 -> 1
+        else -> log10(n.toDouble()).toInt() + 1
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -205,4 +210,26 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var length = n - 2
+    var first = 1
+    var second = 1
+    var box = 0
+    var a = 1
+    var b = 10
+    if (n < 3) return 1
+    while (length > 0) {
+        box = first + second
+        if (first <= second) first = box else second = box
+        while (box >= b) {
+            b *= 10
+            a += 1
+        }
+        length -= a
+    }
+    while (length != 0) {
+        box /= 10
+        length += 1
+    }
+    return (box % 10)
+}
