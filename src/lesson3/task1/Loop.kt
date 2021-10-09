@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
 import kotlin.math.log10
 import kotlin.math.sqrt
 
@@ -74,12 +75,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 
-fun digitNumber(n: Int): Int {
-    return when (n) {
-        0 -> 1
-        else -> log10(n.toDouble()).toInt() + 1
-    }
-}
+fun digitNumber(n: Int): Int = TODO()
 
 /**
  * Простая (2 балла)
@@ -94,14 +90,25 @@ fun fib(n: Int): Int = TODO()
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    for (k in 2..sqrt(n.toDouble()).toInt())
+        if (n % k == 0)
+            return k
+    return n
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var div = n - 1
+    while (div > 1 && n % div != 0) {
+        div -= 1
+    }
+    return div
+}
 
 /**
  * Простая (2 балла)
@@ -119,7 +126,17 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var steps = 0
+    var k = x
+    while (k != 1) {
+        if (k % 2 != 0)
+            k = 3 * k + 1
+        else k /= 2
+        steps += 1
+    }
+    return steps
+}
 
 /**
  * Средняя (3 балла)
@@ -136,7 +153,17 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var f1 = m
+    var s2 = n
+    while (f1 != 0 && s2 != 0) {
+        if (f1 <= s2)
+            s2 %= f1
+        else
+            f1 %= s2
+    }
+    return f1 + s2 == 1
+}
 
 /**
  * Средняя (3 балла)
@@ -210,26 +237,4 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int {
-    var length = n - 2
-    var first = 1
-    var second = 1
-    var box = 0
-    var a = 1
-    var b = 10
-    if (n < 3) return 1
-    while (length > 0) {
-        box = first + second
-        if (first <= second) first = box else second = box
-        while (box >= b) {
-            b *= 10
-            a += 1
-        }
-        length -= a
-    }
-    while (length != 0) {
-        box /= 10
-        length += 1
-    }
-    return (box % 10)
-}
+fun fibSequenceDigit(n: Int): Int = TODO()
