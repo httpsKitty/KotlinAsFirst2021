@@ -242,7 +242,7 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    val units: String = when (n % 10) {
+    val units = when (n % 10) {
         1 -> "I"
         2 -> "II"
         3 -> "III"
@@ -255,7 +255,7 @@ fun roman(n: Int): String {
         else -> ""
     }
 
-    val tens: String = when (n / 10 % 10) {
+    val tens = when (n / 10 % 10) {
         1 -> "X"
         2 -> "XX"
         3 -> "XXX"
@@ -268,7 +268,7 @@ fun roman(n: Int): String {
         else -> ""
     }
 
-    val hundreds: String = when (n / 100 % 10) {
+    val hundreds = when (n / 100 % 10) {
         1 -> "C"
         2 -> "CC"
         3 -> "CCC"
@@ -281,7 +281,7 @@ fun roman(n: Int): String {
         else -> ""
     }
 
-    val thousands: String = when (n / 1000 % 10) {
+    val thousands = when (n / 1000 % 10) {
         1 -> "M"
         2 -> "MM"
         3 -> "MMM"
