@@ -150,4 +150,11 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    val max = max(a, c)
+    val min = kotlin.math.min(d, b)
+    return if (a > d || b < c) -1
+    else min - max
+}
+
+
