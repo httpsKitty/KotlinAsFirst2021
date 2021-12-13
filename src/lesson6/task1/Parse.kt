@@ -86,7 +86,41 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val monthList = listOf(
+        "",
+        "января",
+        "февраля",
+        "марта",
+        "апреля",
+        "мая",
+        "июня",
+        "июля",
+        "августа",
+        "сентября",
+        "октября",
+        "ноября",
+        "декабря"
+    )
+    val parts = digital.split(".")
+    if ("""^(\d{1,2})[.](\d{1,2})[.](\d{1,4})$""".toRegex().matches(digital)) {
+        val day = parts[0].toInt()
+        val month = parts[1].toInt()
+        val year = parts[2].toInt()
+        var leapYear = false
+        if (month < 1 || month > 12) return ""
+        if (day < 1 || day > 31) return ""
+        if (year % 4 == 0 && year % 100 != 0) leapYear = true
+        if (year % 400 == 0) leapYear = true
+        if (year % 4 == 0 && year % 100 != 0) leapYear = true
+        if (year % 400 == 0) leapYear = true
+        if (day > 28 && !leapYear && month == 2) return ""
+        if (day > 29 && leapYear && month == 2) return ""
+        if (day > 30 && month in arrayOf(4, 6, 8, 9, 11)) return ""
+        if (day > 31 && month in arrayOf(1, 3, 5, 7, 8, 10, 12)) return ""
+        return "" + day + " " + monthList[month] + " " + parts[2]
+    } else return ""
+}
 
 /**
  * Средняя (4 балла)
@@ -149,7 +183,17 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    var result = 0
+    val text = str.lowercase().split(" ")
+    for (word in 0..text.size - 2) {
+        val dup1 = text[word]
+        val dup2 = text[word + 1]
+        if (dup1 == dup2) return result
+        result += 1 + text[word].length
+    }
+    return -1
+}
 
 /**
  * Сложная (6 баллов)
