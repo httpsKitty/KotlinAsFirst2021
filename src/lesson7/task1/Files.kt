@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.util.*
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -75,7 +76,24 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    val map = mutableMapOf<String, Int>()
+    val file = File(inputName).readText().lowercase()
+    substrings.forEach { string ->
+        var index = 0
+        var resultNum = 0
+        while (index < file.length) {
+            if (file.indexOf(string, index, true) != -1) {
+                resultNum += 1
+                index = file.indexOf(string, index, true) + 1
+            } else {
+                index += 1
+            }
+        }
+        map[string] = resultNum
+    }
+    return map
+}
 
 
 /**
@@ -113,7 +131,17 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    var size = 0
+    val strings = File(inputName).readLines().map { it.trim() }
+    val file = File(outputName).bufferedWriter()
+    if (strings.isNotEmpty())
+        size = strings.maxOf { it.length } else 0
+    file.use { writer ->
+        strings.forEach {string ->
+            val elseCase = (size - string.length) / 2
+            writer.write(" ".repeat(elseCase) + string + "\n")
+        }
+    }
 }
 
 /**

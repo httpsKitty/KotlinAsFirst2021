@@ -1,8 +1,10 @@
 @file:Suppress("UNUSED_PARAMETER")
 
 package lesson3.task1
+
 import kotlin.math.sqrt
 import lesson1.task1.sqr
+
 // Урок 3: циклы
 // Максимальное количество баллов = 9
 // Рекомендуемое количество баллов = 7
@@ -75,11 +77,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var number = n
     var digits = 0
-    if (number == 0) return 1
-    while (number != 0) {
+    do {
         digits += 1
         number /= 10
-    }
+    } while (number != 0)
     return digits
 }
 
@@ -257,6 +258,7 @@ fun squareSequenceDigit(n: Int): Int {
     }
     return digit % 10
 }
+
 /**
  * Сложная (5 баллов)
  *
