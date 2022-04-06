@@ -1,6 +1,6 @@
 @file:Suppress("UNUSED_PARAMETER")
 
-
+package lesson11.task1
 import java.lang.ArithmeticException
 import kotlin.math.pow
 
