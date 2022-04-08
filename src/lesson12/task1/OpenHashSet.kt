@@ -25,28 +25,62 @@ class OpenHashSet<T>(val capacity: Int) {
     /**
      * Число элементов в хеш-таблице
      */
-    val size: Int get() = TODO()
+    private var sizeImpl = 0
+    val size: Int
+        get() = sizeImpl
 
     /**
      * Признак пустоты
      */
-    fun isEmpty(): Boolean = TODO()
+    fun isEmpty(): Boolean = size == 0
 
     /**
      * Добавление элемента.
      * Вернуть true, если элемент был успешно добавлен,
      * или false, если такой элемент уже был в таблице, или превышена вместимость таблицы.
      */
-    fun add(element: T): Boolean = TODO()
+    fun add(element: T): Boolean {
+        if (size == capacity) return false
+        var index = element.hashCode() % capacity
+        if (elements[index] == element) return false
+        while (elements[index] != null) index = (index + 1) % capacity
+        elements[index] = element
+        sizeImpl++
+        return true
+    }
 
     /**
      * Проверка, входит ли заданный элемент в хеш-таблицу
      */
-    operator fun contains(element: T): Boolean = TODO()
+    operator fun contains(element: T) = containsObject(element)
+
+    private fun containsObject(any: Any?): Boolean {
+        val startIndex = any.hashCode() % capacity
+        if (elements[startIndex] == any) return true
+        var index = (startIndex + 1) % capacity
+        while (any != elements[index] && index != startIndex) index = (index + 1) % capacity
+        return index != startIndex
+    }
 
     /**
      * Таблицы равны, если в них одинаковое количество элементов,
      * и любой элемент из второй таблицы входит также и в первую
      */
-    override fun equals(other: Any?): Boolean = TODO()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as OpenHashSet<*>
+
+        if (size != other.size) return false
+
+        for (otherElement in other.elements) {
+            if (otherElement != null && !this.containsObject(otherElement)) return false
+        }
+
+        return true
+    }
+
+    override fun hashCode(): Int = elements.sumOf { it?.hashCode() ?: 0}
 }
